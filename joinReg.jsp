@@ -9,6 +9,8 @@
 </head>
 <body>
 	<%
+		request.setCharacterEncoding("utf-8");
+	
 		String id = request.getParameter("id");
 		String pw = request.getParameter("pw");
 		String name = request.getParameter("name");
@@ -16,25 +18,16 @@
 		String add = request.getParameter("add");
 		String email = request.getParameter("email");
 		
-		ArrayList<Member> mlist = new ArrayList<Member>();
-		for(Member m : mlist){
-			m.setId(id);
-			m.setPw(pw);
-			m.setName(name);
-			m.setTel(tel);
-			m.setAdd(add);
-			m.setEmail(email);
-			
-			mlist.add(new Member(id, pw, name, tel, add, email));
-		}
+		ArrayList<Member> members = (ArrayList<Member>) application.getAttribute("mlist");
+		application.setAttribute("mlist", members);
+		members.add(new Member(id, pw, name, tel, add, email));
 	%>
 	
 		<script>
-		alert("회원가입이 완료되었습니다.");
+			alert("회원가입이 완료되었습니다.");
 		</script>
 	<%
-		response.sendRedirect("./login.jsp");
+		response.sendRedirect("./join.jsp");
 	%>	
-		
 </body>
 </html>
